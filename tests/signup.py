@@ -7,6 +7,15 @@ from TA_Payment_Flow.tests.common_functions import unique_credentials, display_i
 def enter_cc_details(page):
     # Enter full name on card
     page.get_by_placeholder(" ", exact=True).fill("John Doe")
+
+    
+
+
+
+    iframe = page.frame_locator("iframe[name^='__privateStripeFrame']")
+    iframe.locator("/html[1]/body[1]/div[6]/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[3]/div[1]/div[1]").click()
+    iframe.locator("/html[1]/body[1]/div[6]/div[1]/div[2]/div[1]/div[2]/div[1]/div[2]/div[1]/div[1]/div[3]/div[1]/div[1]").fill("4242 4242 4242 4242")
+
     page.locator("iframe[name=\"__privateStripeFrame6364\"]").content_frame().get_by_label(
         "Credit or debit card number").fill("4242 4242 4242 4242")
     page.locator("iframe[name=\"__privateStripeFrame6366\"]").content_frame().get_by_label("ZIP").fill("12345")
@@ -31,6 +40,16 @@ def manager_signup(pw1) -> None:
         page.locator("input[name=\"confirm_password\"]").fill(userpass)
         # Click the Continue button
         page.get_by_label("tc-button").click()
+        # On the 1st Survey Page, click on the Arbitrage button
+        page.get_by_text("Arbitrage", exact=True).click()
+        # On the 2nd Survey page, click on the Youtube button
+        page.get_by_text("Youtube").click()
+        # Now click the Finish button
+        page.locator("button").filter(has_text="Finish").click()
+        """
+        Manually log in to the DevTeam modal
+        """
+
         # from this point, we test the Payment Details modal
         # Verify the modal is displayed
         try:
